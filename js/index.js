@@ -1,47 +1,34 @@
-////// INDEX
-// function to update game status
 function updateGameStatus() {
   let message;
   if (ttt.isWon()) {
-    message = player.getCurrentPlayer() + " won! 🎉";
-    document.getElementById("gameStatus").style.color = "green";
+    message = "🎉 " + player.getCurrentPlayer() + " won! 🎉";
+    document.getElementById("gameStatus").style = "color: green";
   } else if (ttt.isDraw()) {
-    message = "Game Draw!";
+    message = "Game is Draw!";
   } else {
     message = player.getNextPlayer() + "'s turn:";
   }
   document.getElementById("gameStatus").innerHTML = message;
 }
 
-// function to play each move
 function play(e) {
   e.stopPropagation();
   if (e.target.id && !document.getElementById(e.target.id).innerHTML) {
-    // play move
     let playerSymbol = player.getPlayerSymbol();
     document.getElementById(e.target.id).innerHTML = playerSymbol;
-
-    // check if player won
     ttt.checkWinPattern(playerSymbol, e.target.id);
-
-    // update game status
     updateGameStatus();
   }
 }
 
-// function to initialize game
 function initializeGame(boardSize, parentNodeId, player1, player2) {
-  // setting up Tic Tac Toe
   ttt.initialize(boardSize, parentNodeId);
-
-  // setting up Players
   player.initialize(player1, player2);
   document.getElementById("gameStatus").innerHTML =
     player.getCurrentPlayer() + "'s turn:";
 }
 
 function toggleScreen() {
-  // function to display either gameInputs or gameContainer
   document.getElementById("gameInputs").style.display =
     document.getElementById("gameInputs").style.display === "none"
       ? "flex"
@@ -52,7 +39,6 @@ function toggleScreen() {
       : "flex";
 }
 
-// function to start the game with appropriate inputs
 function startGame() {
   let gameSize = parseInt(document.getElementById("gameSize").value);
   let player1 = document.getElementById("player1").value;
@@ -68,38 +54,32 @@ function startGame() {
   }
 }
 
-//// TICTACTOE
-
-// Tic Tac Toe module
 let ttt = (function () {
   let won;
   let filled;
   let size;
   let counters = {};
 
-  // function to create game board
-  // has quadratic time complexity
   function createGameBoard(size, parentNodeId) {
     let parent = document.getElementById(parentNodeId);
-    let fragment = document.createDocumentFragment(); // Create a document fragment
+    let fragment = document.createDocumentFragment();
 
-    parent.innerHTML = ""; // Clear existing board, if any
+    parent.innerHTML = "";
 
     for (let i = 0; i < size; i++) {
       for (let j = 0; j < size; j++) {
         let element = document.createElement("div");
         element.id = "" + i + j;
         element.style.flexBasis = 100 / size - 1 + "%";
-        fragment.appendChild(element); // Append to the fragment
+        fragment.appendChild(element);
       }
     }
 
-    parent.appendChild(fragment); // Append the fragment to the DOM
+    parent.appendChild(fragment);
   }
 
   return {
     initialize: function (s, parentNodeId) {
-      // function to initialize game params
       size = s;
       filled = 0;
       won = false;
@@ -107,16 +87,12 @@ let ttt = (function () {
       createGameBoard(size, parentNodeId);
     },
     isWon: function () {
-      // function to check if game is won
       return won;
     },
     isDraw: function () {
-      // function to check if game is drawn
       return !won && filled === size * size;
     },
     checkWinPattern: function (icon, currentPosition) {
-      // algorithm to update game patterns and check for win situation
-      // has constant time complexity
       ++filled;
       let [row, column] = currentPosition.split("");
       const rowCounter = icon + "r" + row;
@@ -155,29 +131,22 @@ let ttt = (function () {
   };
 })();
 
-//// PLAYER
-
-// Player module
 let player = (function () {
   let player;
   let playerNames;
   return {
     initialize: function (name1, name2) {
-      // function to initlialize players
       player = 1;
       playerNames = [name1, name2];
     },
     getCurrentPlayer: function () {
-      // funtion to get current player's name
       return playerNames[player - 1];
     },
     getNextPlayer: function () {
-      // function to update next player and return his/her name
       player = player === 1 ? 2 : 1;
       return playerNames[player - 1];
     },
     getPlayerSymbol: function () {
-      // function to get player icon
       return player === 1 ? "X" : "O";
     },
   };
