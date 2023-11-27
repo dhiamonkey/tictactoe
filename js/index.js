@@ -70,7 +70,7 @@ let ttt = (function () {
       for (let j = 0; j < size; j++) {
         let element = document.createElement("div");
         element.id = "" + i + j;
-        element.style.flexBasis = 100 / size - 1 + "%";
+        element.style.flexBasis = 100 / size - 1.5 + "%";
         fragment.appendChild(element);
       }
     }
