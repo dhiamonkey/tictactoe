@@ -1,0 +1,83 @@
+/* make the body center of screen */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    width: 90%;
+    margin: 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+
+
+#gameInputs {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#gameInputs * {
+    flex: 0 0 48%;
+    margin: 10px auto;
+}
+
+#gameContainer {
+    width: -webkit-fill-available;
+    display: none;
+    flex-direction: column;
+}
+
+#gameStatus {
+    font-weight: bold;
+    text-align: center;
+    margin: 10px;
+}
+
+#game {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#game div {
+    height: 5rem;
+    max-width: 10rem;
+    flex: 0 0 calc(33.333% - 10px);
+    /* Allocate flex-basis for 3 items per row, subtracting the gap */
+    border: 2px solid #ddd;
+    background-color: #fff;
+    /* Fixed height for cells */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 2em;
+}
+
+.startBtn,
+.resetBtn {
+    margin: 10px auto;
+    align-self: center;
+}
+
+@media (min-width: 426px) {
+    body {
+        width: 80%;
+        margin: auto;
+    }
+}
+
+@media (min-width: 580px) {
+    body {
+        width: 60%;
+    }
+}
+
+
+@media (min-width: 769px) {
+    body {
+        width: 50%;
+    }
+}
